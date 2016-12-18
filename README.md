@@ -1,4 +1,9 @@
 # Pyweb
 Library for writing HTML5 games in Python.
 
-Just download this repo and edit the Python file in your favorite editor.
+## Stack
+The library itself is written in Javascript and Canvas (with possible PIXI support in the future). It uses the Brython framework to compile your Python code into Javascript code which can be run by the browser. It is possible to use Pyweb without the Python component, however the framework is optimized for Python. 
+
+This is the stack visualized:
+
+Python (Brython) -> Javascript -> Pyweb  
