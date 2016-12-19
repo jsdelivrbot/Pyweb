@@ -7,3 +7,16 @@ The library itself is written in Javascript and Canvas (with possible PIXI suppo
 This is the stack visualized:
 
 Python (Brython) -> Javascript -> Pyweb  
+
+## Future
+
+####Current
+- Sprites
+- Rectangles
+- Text
+- Keyboard Input
+
+####Future
+- Mouse/Touch Input
+- Physics
+- Faster Renderer (PIXI.js)
