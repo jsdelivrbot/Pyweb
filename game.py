@@ -5,13 +5,26 @@ game.start()
 game.clear("black")
 
 sprite = game.sprite("ship.png")
-sprite.x = 10
-sprite.y = 10
+text = game.text("Hello!")
+text.font = "Arial";
+text.y = 100
 
 def update():
+
+    if(game.input.check("W")):
+        sprite.y -= 1
+
+    if(game.input.check("S")):
+        sprite.y += 1
+
+    if(game.input.check("A")):
+        sprite.x -= 1
+
+    if(game.input.check("D")):
+        sprite.x += 1
+
     game.clear("black")
-    sprite.x += 1
-    sprite.y += 1
     game.draw(sprite)
+    game.draw(text)
 
 game.loop(update)
