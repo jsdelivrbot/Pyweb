@@ -1,30 +1,25 @@
 from browser import window
 
-game = window.getLibrary()
-game.start()
-game.clear("black")
+app = window.getLibrary()
+app.start()
 
-sprite = game.sprite("ship.png")
-text = game.text("Hello!")
-text.font = "Arial";
-text.y = 100
+sprite = app.sprite("ship.png")
+app.add(sprite)
 
 def update():
+    if(app.input.check("W")):
+        sprite.setY(sprite.getY() - 1)
 
-    if(game.input.check("W")):
-        sprite.y -= 1
+    if(app.input.check("S")):
+        sprite.setY(sprite.getY() + 1)
 
-    if(game.input.check("S")):
-        sprite.y += 1
+    if(app.input.check("A")):
+        sprite.setX(sprite.getX() - 1)
 
-    if(game.input.check("A")):
-        sprite.x -= 1
+    if(app.input.check("D")):
+        sprite.setX(sprite.getX() + 1)
 
-    if(game.input.check("D")):
-        sprite.x += 1
+    if(app.input.mouse.down):
+        app.log("Downnnnn")
 
-    game.clear("black")
-    game.draw(sprite)
-    game.draw(text)
-
-game.loop(update)
+app.loop(update)

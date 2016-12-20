@@ -1,36 +1,85 @@
 class PWSprite{
     constructor(src){
-        this.image = new Image();
-        this.image.src = src;
-        this.x = 0;
-        this.y = 0;
+        this.texture = PIXI.Texture.fromImage(src);
+        this.sprite = new PIXI.Sprite(this.texture);
     }
 
-    draw(c){
-        c.drawImage(this.image, this.x, this.y);
+    add(s){
+        s.addChild(this.sprite);
+    }
+
+    setPosition(x, y){
+        this.sprite.x = x;
+        this.sprite.y = y;
+    }
+
+    setX(x){
+        this.sprite.x = x;
+    }
+
+    getX(){
+        return this.sprite.x;
+    }
+
+    setY(y){
+        this.sprite.y = y;
+    }
+
+    getY(){
+        return this.sprite.y;
     }
 }
 
 class PWText{
     constructor(text){
         this.text = text;
-        this.x = 0;
-        this.y = 0;
-        this.size = 48;
-        this.font = "serif";
-        this.color = "white";
+        this.font = "Arial";
+        this.size = "36px";
+        this.style = {
+            fontFamily : this.font,
+            fontSize : this.size
+        };
+
+        this.textObject = new PIXI.Text(this.text, this.style);
     }
 
-    draw(c){
-        c.fillStyle = this.color;
-        c.font = this.size + "px " + this.font;
-        c.fillText(this.text, this.x, this.y);
+    add(s){
+        s.addChild(this.textObject);
+    }
+
+    setPosition(x, y){
+        this.textObject.x = x;
+        this.textObject.y = y;
+    }
+
+    setX(x){
+        this.textObject.x = x;
+    }
+
+    getX(){
+        return this.textObject.x;
+    }
+
+    setY(y){
+        this.textObject.y = y;
+    }
+
+    getY(){
+        return this.textObject.y;
     }
 }
 
 class PWInput{
-    constructor(){
+    constructor(renderer){
+        this.width = renderer.width;
+        this.height = renderer.height;
         this.keys = {};
+        this.mouse = {
+            down: false,
+            x: -1,
+            y: -1
+        };
+
         var self = this;
 
         document.onkeydown = function(e) {
@@ -51,6 +100,14 @@ class PWInput{
             }
         }
 
+        document.onmousedown = function(e){
+            self.mouse.down = true;
+        }
+
+        document.onmouseup = function(e){
+            self.mouse.down = false;
+        }
+
     }
 
     check(k){
@@ -61,31 +118,27 @@ class PWInput{
 class PW{
 
         constructor(){
-            console.log("Welcome!");
-
-            //initialize components before the game starts
-            this.input = new PWInput();
+            console.log("PW");
         }
 
         start(){
-            this.con = document.createElement("canvas");
-            this.con.width = 800;
-            this.con.height = 600;
-            document.body.appendChild(this.con);
-            this.canvas = this.con.getContext('2d');
+            this.renderer = PIXI.autoDetectRenderer(800, 600, {
+                backgroundColor : 0x000000
+            });
+
+            this.input = new PWInput(this.renderer);
+
+            this.stage = new PIXI.Container();
+
+            document.body.appendChild(this.renderer.view);
         }
 
         getWidth(){
-            return this.con.width;
+            //return this.con.width;
         }
 
         getHeight(){
-            return this.con.height;
-        }
-
-        clear(color){
-            this.canvas.fillStyle = color;
-            this.canvas.fillRect(0, 0, 800, 600);
+            //return this.con.height;
         }
 
         sprite(src){
@@ -98,21 +151,18 @@ class PW{
             return m;
         }
 
-        draw(e){
-            e.draw(this.canvas);
-        }
-
-        drawRectangle(color, x, y, w, h){
-            this.canvas.fillStyle = color;
-            this.canvas.fillRect(x, y, w, h);
+        add(e){
+            e.add(this.stage);
         }
 
         log(msg){
-            console.log("Pyweb: " + msg);
+            console.log("[Pyweb] " + msg);
         }
 
         loop(fn){
+            var self = this;
             function u(){
+                self.renderer.render(self.stage);
                 fn();
                 window.requestAnimationFrame(u);
             }
