@@ -1,29 +1,25 @@
 from browser import window
 
-app = window.getLibrary()
+app = window.Lemming.get()
 app.start()
 
-speed = 3
-
-left = app.sprite("paddle.png")
-left.setX(8)
-app.add(left)
-
-right = app.sprite("paddle.png")
-right.setX(800 - 24)
-app.add(right)
+obj = app.create.sprite("floor.png")
+obj.setX(10)
+obj.setY(10)
+app.add(obj)
 
 def update():
-    if(app.input.check("W")):
-        left.setY(left.getY() - speed)
+    if(app.input.check("w")):
+        obj.move(0, -1)
+    
+    if(app.input.check("s")):
+        obj.move(0, 1)
 
-    if(app.input.check("S")):
-        left.setY(left.getY() + speed)
+    if(app.input.check("a")):
+        obj.move(-1, 0)
 
-    if(app.input.check("I")):
-        right.setY(right.getY() - speed)
-
-    if(app.input.check("K")):
-        right.setY(right.getY() + speed)
+    if(app.input.check("d")):
+        obj.move(1, 0)
 
 app.loop(update)
+

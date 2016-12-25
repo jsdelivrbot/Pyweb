@@ -1,0 +1,6 @@
+-cp src
+-main Lemming
+-lib pixijs
+-js lib/lib.js
+-D js-classic
+-D js-es5
