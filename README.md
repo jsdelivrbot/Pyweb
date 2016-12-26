@@ -12,3 +12,7 @@ The library itself is written in Haxe and PIXI. It uses the Brython framework to
   - Transpiles Python code into Javascript
 - PIXI.js
   - Fast Canvas/WebGL renderer
+  
+  ## Version
+  
+  Pyweb 0.1 (Lemming)
